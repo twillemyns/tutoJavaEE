@@ -1,6 +1,7 @@
 package org.sid.web;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -42,11 +43,22 @@ public class ProduitController {
 		produitRepository.deleteById(id);
 		return "redirect:/index?page="+page+"&size="+size+"&motCle="+motCle;
 	}
-	@RequestMapping(value="form", method=RequestMethod.GET)
+	@RequestMapping(value="/form", method=RequestMethod.GET)
 	public String formProduit(Model model) {
 		model.addAttribute("produit", new Produit());
 		return "FormProduit";
 	}
+	
+	@RequestMapping(value="/edit", method=RequestMethod.GET)
+	public String edit(Model model, Long id) {
+		Optional<Produit> p=produitRepository.findById(id);
+		if (p.isPresent()) {
+            Produit produit = p.get();
+            model.addAttribute("produit", produit);
+        }
+        return "EditProduit";
+    }
+	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String save(Model model, @Valid Produit produit, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
