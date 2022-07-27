@@ -23,7 +23,7 @@ public class ProduitController {
 	@Autowired
 	private ProduitRepository produitRepository;
 	 
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = "/user/index")
 	public String index(Model model, 
 			@RequestParam(name = "page", defaultValue = "0")int p,
 			@RequestParam(name = "size", defaultValue = "5")int s,
@@ -38,18 +38,18 @@ public class ProduitController {
 		model.addAttribute("motCle", mc);
 		return "produits";
 	}
-	@RequestMapping(value="/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/delete", method=RequestMethod.GET)
 	public String delete(Long id, String motCle, int page, int size) {
 		produitRepository.deleteById(id);
-		return "redirect:/index?page="+page+"&size="+size+"&motCle="+motCle;
+		return "redirect:/user/index?page="+page+"&size="+size+"&motCle="+motCle;
 	}
-	@RequestMapping(value="/form", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/form", method=RequestMethod.GET)
 	public String formProduit(Model model) {
 		model.addAttribute("produit", new Produit());
 		return "FormProduit";
 	}
 	
-	@RequestMapping(value="/edit", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/edit", method=RequestMethod.GET)
 	public String edit(Model model, Long id) {
 		Optional<Produit> p=produitRepository.findById(id);
 		if (p.isPresent()) {
@@ -59,12 +59,25 @@ public class ProduitController {
         return "EditProduit";
     }
 	
-	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/save", method=RequestMethod.POST)
 	public String save(Model model, @Valid Produit produit, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "FormProduit";
 		}
 		produitRepository.save(produit);
 		return "Confirmation";
+	}
+	
+	@RequestMapping(value="/")
+	public String home() {
+		return "redirect:/user/index";
+	}
+	@RequestMapping(value="/403")
+	public String accessDenied() {
+		return "403";
+	}
+	@RequestMapping(value="/login")
+	public String login() {
+		return "login";
 	}
 }

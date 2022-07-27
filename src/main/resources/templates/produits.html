@@ -11,7 +11,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container">
-			<form th:action="@{index}" method="get">
+			<form th:action="@{/user/index}" method="get">
 				<label>Mot clé:</label> <input type="text" name="motCle"
 					th:value="${motCle}" />
 				<button class="btn btn-primary">Chercher</button>
@@ -34,9 +34,9 @@
 						<td th:text="${p.designation}"></td>
 						<td th:text="${p.prix}"></td>
 						<td th:text="${p.quantite}"></td>
-						<td><a th:href="@{edit(id=${p.id})}">Edit</a></td>
+						<td><a th:href="@{/admin/edit(id=${p.id})}">Edit</a></td>
 						<td><a onclick="return confirm('Etes vous sur?')"
-							th:href="@{delete(id=${p.id}, page=${pageCourante}, size=${size},motCle=${motCle})}">Delete</a></td>
+							th:href="@{/admin/delete(id=${p.id}, page=${pageCourante}, size=${size},motCle=${motCle})}">Delete</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -45,7 +45,7 @@
 			<ul class="nav nav-pills">
 				<li th:class="${pageCourante}==${status.index}?'active':''"
 					th:each="pa,status:${pages}"><a
-					th:href="@{index(page=${status.index},size=${size},motCle=${motCle})}"
+					th:href="@{/user/index(page=${status.index},size=${size},motCle=${motCle})}"
 					th:text="${status.index}"></a></li>
 			</ul>
 		</div>

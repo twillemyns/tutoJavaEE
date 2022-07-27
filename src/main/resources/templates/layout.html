@@ -12,8 +12,9 @@
 		<div class="navbar navbar-default">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
-					<li><a th:href="@{index}">Chercher</a></li>
-					<li><a th:href="@{form}">Produits</a></li>
+					<li><a th:href="@{/user/index}">Chercher</a></li>
+					<li><a th:href="@{/admin/form}">Produits</a></li>
+					<li><a th:href="@{/login?logout}" th:inline="text">[[${#httpServletRequest.remoteUser}]]</a></li>
 				</ul>
 			</div>
 		</div>
